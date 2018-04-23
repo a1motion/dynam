@@ -18,6 +18,6 @@ describe("DDB Query", async () => {
     uid: 'test',
   }));
   console.log(await db.scan('dynam', {
-    uid: 'test',
+    t: '<1',
   }));
 });

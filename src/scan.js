@@ -18,25 +18,26 @@ function scan(tableName, params) {
     if (g) {
       if (['>', '<', '=', '>=', '=<'].includes(g[0])) {
         params[key] = params[key].substring(g[0].length);
+        if (!Number.isNaN(Number(params[key]))) {
+          params[key] = Number(params[key]);
+        }
         [op] = g;
       } else if (g[0] === 'bw') {
         exp = false;
         expr += `begins_with(:${id}, #${id})`;
       }
-    } else {
-      if (typeof (params[key]) === 'string') {
-        if (params[key].startsWith('.') && !/$(\.\.)/.test(params[key])) {
-          params[key] = params[key].substring(1);
-          params[key] = params[key].replace(/$(\.\.)/, '.');
-        }
+    } else if (typeof (params[key]) === 'string') {
+      if (params[key].startsWith('.') && !/$(\.\.)/.test(params[key])) {
+        params[key] = params[key].substring(1);
+        params[key] = params[key].replace(/$(\.\.)/, '.');
       }
-      names[`#${id}`] = key;
-      if (val) {
-        values[`:${id}`] = attr.wrap1(params[key]);
-      }
-      if (exp) {
-        expr += `:${id} ${op} #${id}`;
-      }
+    }
+    names[`#${id}`] = key;
+    if (val) {
+      values[`:${id}`] = attr.wrap1(params[key]);
+    }
+    if (exp) {
+      expr += `:${id} ${op} #${id}`;
     }
   });
   return new Promise((resolve, reject) => {
@@ -47,6 +48,7 @@ function scan(tableName, params) {
       ExpressionAttributeValues: values,
       ExpressionAttributeNames: names,
     };
+    console.log(param);
     const onScan = (err, data) => {
       if (err) {
         reject(err);

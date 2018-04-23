@@ -18,6 +18,9 @@ function query(tableName, params) {
     if (g) {
       if (['>', '<', '=', '>=', '=<'].includes(g[0])) {
         params[key] = params[key].substring(g[0].length);
+        if (!Number.isNaN(Number(params[key]))) {
+          params[key] = Number(params[key]);
+        }
         [op] = g;
       } else if (g[0] === 'bw') {
         exp = false;
