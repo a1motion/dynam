@@ -11,10 +11,7 @@ describe("DDB Init", () => {
   });
   it("should embed db service into object", () => {
     expect(db).to.have.property("db");
-  });
-  db.batchGet('dynam', [{ uid: 'rJeASKm62f' }, { uid: 'BJgYEv-T2G' }]).then((r) => {
-    console.log(r);
-  })
+  }); 
 });
 describe("DDB Query", () => {
   it('should find the item with the uid of test', (done) => {
