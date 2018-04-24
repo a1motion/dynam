@@ -2,22 +2,19 @@
   "name": "dynam",
   "version": "1.0.0",
   "description": "A DynamoDB Wrapper",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha",
-    "cover": "istanbul cover node_modules/mocha/bin/_mocha && codecov",
-    "clean": "rm -rf ./dist",
-    "build": "./node_modules/.bin/babel src -s --out-dir ./dist",
-    "prepare": "npm run build",
-    "docs": "documentation build dist/** -f html -o docs"
+    "cover": "istanbul cover node_modules/mocha/bin/_mocha && codecov"
   },
   "files": [
-    "dist/*"
+    "lib/*"
   ],
   "author": "dotconnor <connor@dotconnor.com> (https://dotconnor.com)",
   "license": "MIT",
   "dependencies": {
     "aws-sdk": "^2.227.1",
+    "debug": "^3.1.0",
     "dynamodb-data-types": "^3.0.1",
     "shortid": "^2.2.8",
     "uuid": "^3.1.0"
@@ -27,19 +24,10 @@
     "url": "https://github.com/a1motion/dynam.git"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^8.0.2",
-    "babel-preset-airbnb": "^2.4.0",
-    "babel-preset-env": "^1.6.1",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "codecov": "^3.0.0",
-    "documentation": "^5.3.3",
-    "esdoc": "^1.0.4",
-    "esdoc-brand-plugin": "^1.0.0",
-    "esdoc-plugin-enhanced-navigation": "^0.1.2",
-    "esdoc-standard-plugin": "^1.0.0",
+    "docsify-cli": "^4.2.1",
     "eslint": "^4.10.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",

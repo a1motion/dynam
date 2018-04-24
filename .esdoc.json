@@ -1,9 +1,8 @@
 {
-  "source": "./src",
-  "destination": "./docs",
+  "source": "./lib",
+  "destination": "./docs/docs",
   "package.json": "./package.json",
   "plugins": [
-    {"name": "esdoc-standard-plugin"},
-    {"name": "esdoc-brand-plugin"}
+    { "name": "esdoc-publish-markdown-plugin" }
   ]
 }

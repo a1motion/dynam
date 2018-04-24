@@ -1,6 +1,6 @@
 /* eslint-disable */
 const expect = require('chai').expect;
-const dynam = require("../src/index");
+const dynam = require("../lib/index");
 const chaiAsPromised = require("chai-as-promised");
 const shortid = require('shortid');
 var db;
@@ -37,19 +37,58 @@ describe("DDB Scan", () => {
     });
   });
 });
+var id = shortid.generate();
 describe('DDB Put', () => {
-  var id = shortid.generate();
-  db.put('dynam', {
-    uid: id,
-    t: 8,
-  }).then(() => {
-    db.query('dynam', {
-      uid: id
-    }).then((r) => {
-      expect(r).to.be.an('array');
-      expect(r).to.have.a.lengthOf(1);
-      expect(r[0]).to.have.property('t').equal(8);
-      expect(r[0]).to.have.property('uid').equal(id);
+  it('should put the object into dynamodb', (done) => {
+    db.put('dynam', {
+      uid: id,
+      t: 8,
+    }).then(() => {
+      db.query('dynam', {
+        uid: id
+      }).then((r) => {
+        expect(r).to.be.an('array');
+        expect(r).to.have.a.lengthOf(1);
+        expect(r[0]).to.have.property('t').equal(8);
+        expect(r[0]).to.have.property('uid').equal(id);
+        done();
+      });
     });
+  });
+});
+describe('DDB Update', () => {
+  it('should update the item that was inserted before', (done) => {
+    db.update('dynam', {
+      uid: id,
+    }, {
+      t: 9
+    }).then(() => {
+      db.query('dynam', {
+        uid: id
+      }).then((r) => {
+        expect(r).to.be.an('array');
+        expect(r).to.have.a.lengthOf(1);
+        expect(r[0]).to.have.property('t').equal(9);
+        expect(r[0]).to.have.property('uid').equal(id);
+        done();
+      });
+    })
+  });
+  it('should add 4 to t of the item', (done) => {
+    db.update('dynam', {
+      uid: id,
+    }, {
+      t: '+4'
+    }).then(() => {
+      db.query('dynam', {
+        uid: id
+      }).then((r) => {
+        expect(r).to.be.an('array');
+        expect(r).to.have.a.lengthOf(1);
+        expect(r[0]).to.have.property('t').equal(13);
+        expect(r[0]).to.have.property('uid').equal(id);
+        done();
+      });
+    })
   });
 });
