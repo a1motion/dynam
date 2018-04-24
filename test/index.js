@@ -38,6 +38,7 @@ describe("DDB Scan", () => {
   });
 });
 var id = shortid.generate();
+console.log(id);
 describe('DDB Put', () => {
   it('should put the object into dynamodb', (done) => {
     db.put('dynam', {
