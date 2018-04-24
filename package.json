@@ -1,6 +1,6 @@
 {
   "name": "dynam",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A DynamoDB Wrapper",
   "main": "lib/index.js",
   "scripts": {
