@@ -1,6 +1,7 @@
 const aws = require('aws-sdk');
 const query = require('./query');
 const scan = require('./scan');
+const put = require('./put');
 
 function dynam(opts) {
   try {
@@ -28,6 +29,7 @@ function dynam(opts) {
   }
   this.query = query;
   this.scan = scan;
+  this.put = put;
   return this;
 }
 

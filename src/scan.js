@@ -1,13 +1,14 @@
 const shortid = require('shortid');
 const attr = require('dynamodb-data-types').AttributeValue;
 
-shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_@');
+shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-');
 function scan(tableName, params) {
   const values = {};
   const names = {};
   let expr = '';
   Object.keys(params).forEach((key, i) => {
-    const id = shortid.generate();
+    let id = shortid.generate();
+    id = id.replace(/-/g, '_');
     const g = /^(=|<|>|<=|>=|bw)/.exec(params[key]);
     let op = '=';
     const val = true;
@@ -37,7 +38,7 @@ function scan(tableName, params) {
       values[`:${id}`] = attr.wrap1(params[key]);
     }
     if (exp) {
-      expr += `:${id} ${op} #${id}`;
+      expr += `#${id} ${op} :${id}`;
     }
   });
   return new Promise((resolve, reject) => {
@@ -48,7 +49,6 @@ function scan(tableName, params) {
       ExpressionAttributeValues: values,
       ExpressionAttributeNames: names,
     };
-    console.log(param);
     const onScan = (err, data) => {
       if (err) {
         reject(err);

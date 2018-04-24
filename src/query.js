@@ -1,13 +1,14 @@
 const shortid = require('shortid');
 const attr = require('dynamodb-data-types').AttributeValue;
 
-shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_@');
+shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-');
 function query(tableName, params) {
   const values = {};
   const names = {};
   let expr = '';
   Object.keys(params).forEach((key, i) => {
-    const id = shortid.generate();
+    let id = shortid.generate();
+    id = id.replace(/-/g, '_');
     const g = /^(=|<|>|<=|>=|bw)/.exec(params[key]);
     let op = '=';
     const val = true;
